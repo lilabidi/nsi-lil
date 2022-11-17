@@ -1,16 +1,15 @@
-image: python:3.10-alpine
-
 build:
+  image: python:3.10-alpine
   stage: build
   only:
     - main
   before_script:
     pip install -r requirements.txt
   script:
-    - mkdocs build --site-dir public
+    - mkdocs build
   artifacts:
     paths:
-      - public
+      - site
 
 pages:
   stage: deploy
@@ -20,7 +19,7 @@ pages:
     - job: build
       artifacts: true
   script:
-    - echo 'OK'
+    - mv site public
   artifacts:
     paths:
       - public
