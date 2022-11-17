@@ -1,14 +1,16 @@
-site_name: "Terminal et IDE dans MkDocs"
-site_url: https://bouillotvincent.gitlab.io/pyodide-mkdocs
-repo_url: https://gitlab.com/bouillotvincent/pyodide-mkdocs
+site_name: "NSI Saint-Aspais"
+#site_url: https://bouillotvincent.gitlab.io/pyodide-mkdocs
+#repo_url: https://gitlab.com/bouillotvincent/pyodide-mkdocs
 edit_uri: tree/main/docs/
-site_description: Tutoriel pour un IDE et un Terminal dans MkDocs Material
+site_description: NSI
+site_author: Mireille Coilhac
 copyright: |
-  Copyleft &#127279 2021 <a href="https://bouillotvincent.gitlab.io/tests-avec-mkdocs/" target="_blank" rel="noopener">Vincent BOUILLOT</a>
+  Copyright © 2022 Mireille COILHAC
+    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>.
 docs_dir: docs
 nav:
-  - index.md
-  - chap01/index.md
+  - "🏡 Accueil": index.md
+  - ...
 
 theme:
   name: material
@@ -78,23 +80,23 @@ markdown_extensions:
       permalink: ⚓︎
       toc_depth: 3
 
-extra:
-  social:
+#extra:
+  #social:
     # - icon: fontawesome/brands/gitlab
     #   link: https://gitlab.com/ens-fr
     #   name: Enseignement en français
 
-    - icon: fontawesome/brands/discourse
-      link: https://mooc-forums.inria.fr/moocnsi/
-      name: Le forum des enseignants de NSI
+    #- icon: fontawesome/brands/discourse
+    #  link: https://mooc-forums.inria.fr/moocnsi/
+    #  name: Le forum des enseignants de NSI
 
-    - icon: fontawesome/solid/paper-plane
-      link: mailto:prof-bouillot@protonmail.com
-      name: Écrire à l'auteur
-  site_url: https://bouillotvincent.gitlab.io/pyodide_mkdocs/
-  ace_style: # https://ace.c9.io/build/kitchen-sink.html for customization
-    default: crimson_editor
-    slate: tomorrow_night_bright
+    #- icon: fontawesome/solid/paper-plane
+   #   link: mailto:prof-bouillot@protonmail.com
+    #  name: Écrire à l'auteur
+ # site_url: https://bouillotvincent.gitlab.io/pyodide_mkdocs/
+ # ace_style: # https://ace.c9.io/build/kitchen-sink.html for customization
+ #   default: crimson_editor
+ #   slate: tomorrow_night_bright
     # slate: tomorrow_night_bright|youtube if your dark mode is youtube
 
 plugins:
