@@ -7,7 +7,8 @@ copyright: |
   Copyleft &#127279 2021 <a href="https://bouillotvincent.gitlab.io/tests-avec-mkdocs/" target="_blank" rel="noopener">Vincent BOUILLOT</a>
 docs_dir: docs
 nav:
-  - "Terminal ▶️ et IDE 🖥 dans MkDocs": index.md
+  - index.md
+  - ...
 
 theme:
   name: material

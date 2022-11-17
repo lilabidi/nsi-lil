@@ -1,3 +1,3 @@
 # Un projet simple pour déployer des exercices
 
-{{ IDE('exo.py') }}
+Ici, nous aurons du cours et des exercices
