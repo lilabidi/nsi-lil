@@ -1,3 +1,3 @@
 mkdocs-material
-mkdocs-macros-plugins
-mkdocs-enumerate-headings-plugins
+mkdocs-macros-plugin
+mkdocs-enumerate-headings-plugin
