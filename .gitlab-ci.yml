@@ -20,7 +20,7 @@ pages:
     - job: build
       artifacts: true
   script:
-    - true
+    - echo 'OK'
   artifacts:
     paths:
       - public
