@@ -10,7 +10,7 @@ copyright: |
 docs_dir: docs
 nav:
   - "🏡 Accueil": index.md
-  - "Listes Python": 
+  - "Listes Python": listes_python/01_taleaux.md
 
 theme:
   name: material
