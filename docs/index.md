@@ -1,3 +1,3 @@
-# Un projet simple pour déployer des exercices
+# La page de Mme COILHAC
 
-Ici, nous aurons du cours et des exercices
+Ici, nous aurons du cours et des exercices de NSI première
