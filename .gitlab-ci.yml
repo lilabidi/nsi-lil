@@ -1,8 +1,6 @@
 build:
   image: python:3.10-alpine
   stage: build
-  only:
-    - main
   before_script:
     pip install -r requirements.txt
   script:
@@ -13,8 +11,6 @@ build:
 
 pages:
   stage: deploy
-  only:
-    - main
   needs:
     - job: build
       artifacts: true
