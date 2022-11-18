@@ -1,4 +1,4 @@
 mkdocs-material
-mkdocs-awesome-pages
+mkdocs-awesome-pages-plugin
 mkdocs-macros-plugin
 mkdocs-enumerate-headings-plugin
