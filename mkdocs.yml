@@ -1,4 +1,5 @@
 site_name: "NSI Saint-Aspais"
+site_url: "https://mcoilhac.forge.aeif.fr/site-nsi/"
 site_description: Un modèle avec mkdocs
 site_author: Mireille Coilhac
 
@@ -17,6 +18,7 @@ theme:
     favicon: assets/favicon.ico
     icon:
       logo: material/application-variable
+    custom_dir: my_theme_customizations/
     name: material
     font: false                     # RGPD ; pas de fonte Google
     language: fr                    # français
@@ -112,14 +114,13 @@ plugins:
   - search
   - awesome-pages:
         collapse_single_pages: true
+  - macros
   
 
 extra_javascript:
-  - xtra/mathjax.js                    # MathJax
+  - xtra/javascripts/mathjax-config.js                    # MathJax
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 extra_css:
-  - xtra/pyoditeur.css ##
-  - xtra/qcm.css ##
-  - xtra/ajustements.css  # ajustements
-  - css/extra.css         ##           
+  - xtra/stylesheets/qcm.css ##
+  - xtra/stylesheets/ajustements.css  # ajustements
