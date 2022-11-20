@@ -3,8 +3,7 @@ author: Mireille Coilhac
 title: Crédits
 ---
 
-Le chapitre sur les tableaux a été réalisé par N. Revéret avec l'aide des membre du groupe [e-nsi](https://e-nsi.forge.aeif.fr/), en particulier Mme Coilhac 
-
+Le chapitre sur les tableaux a été réalisé par N. Revéret, Pierre Marquestaut et Mireille Coilhac avec l'aide des membre du groupe e-nsi .
 L'ensemble des documents sont sous licence [CC-BY-NC-SA 4.0 (Attribution, Utilisation Non Commerciale, ShareAlike)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Le site est hébergé par la forge de [l'*Association des Enseignants d'Informatique de France*](https://aeif.fr/index.php/accueil/).
