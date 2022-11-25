@@ -1,5 +1,5 @@
-# Bienvenue sur la page de NSI du Lycée Saint-Aspais de MELUN
+# Brouillons avant publications
 
-Cours de première NSI (classes de Mme Coilhac)
+Cours de première NSI et de terminale NSI(classes de Mme Coilhac)
 
 😊 Ce site évoluera pendant l'année ...
