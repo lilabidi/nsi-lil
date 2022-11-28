@@ -1,0 +1,2 @@
+ferme_gaston = {"lapin": 5, "vache": 7, "cochon": 2, "cheval": 4, "lapin": 6}
+print(ferme_gaston)
