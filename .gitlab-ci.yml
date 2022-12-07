@@ -73,8 +73,7 @@ pages:
   dependencies:
     - build
   rules:
-    - if: $CI_MERGE_REQUEST_ID && $CI_MERGE_REQUEST_APPROVED
-    #- if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
   artifacts:
     paths:
