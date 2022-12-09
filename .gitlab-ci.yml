@@ -21,6 +21,7 @@ build:
     - mkdocs build
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_REF_NAME == 'main'
   artifacts:
     paths:
       - site
@@ -70,11 +71,13 @@ pages:
     - job: build
       artifacts: true
     - job: pages:review:stop
+      optional: true
   dependencies:
     - build
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    - if: $CI_COMMIT_REF_NAME == 'main'
   artifacts:
     paths:
       - public
