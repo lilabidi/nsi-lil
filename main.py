@@ -3,6 +3,7 @@ import hashlib
 from math import log10
 import random
 import re
+import csv
 from typing import Literal, Union
 from urllib.parse import unquote
 
@@ -651,3 +652,51 @@ def define_env(env):
     #     html_element += f"""<div class="buttonWrapper"><span class = "validationButton" id = "valider_{id_qcm}">Valider</span><span class = "validationButton" id = "recharger_{id_qcm}">Recharger</span></div><div class = "showScore" id="score_{id_qcm}"></div>"""
     #     print(html_element)
     #     return html_element
+
+    @env.macro
+    def affiche_question(num,index):
+        lenonce = env.variables.qcm[num]["enonce"]
+        # Traitement si enoncé sur plusieurs lignes
+        nl = lenonce.find('\n')
+        if nl>0:
+            lenonce=lenonce.replace("\n",'"\n',1)
+            lenonce=lenonce.replace("\n",'\n    ')
+        else:
+            lenonce+='"'
+        # Traitement si image
+        limg = env.variables.qcm[num]["image"]
+        if limg!='':
+            lenonce+=f'\n \t ![illustration](./images/C{env.variables.qcm[num]["chapitre"]}/{limg})'
+            lenonce+='{: .imgcentre}\n'
+        modele = f'''
+!!! fabquestion "**{index}.** {lenonce}
+    === "Réponses"
+        - [ ] a) {env.variables.qcm[num]["reponseA"]}
+        - [ ] b) {env.variables.qcm[num]["reponseB"]}
+        - [ ] c) {env.variables.qcm[num]["reponseC"]}
+        - [ ] d) {env.variables.qcm[num]["reponseD"]}
+    === "Correction"\n'''
+        for rep in "ABCD":
+            clerep = "reponse"+rep
+            if env.variables.qcm[num]["bonne_reponse"]==rep:
+                modele+=f"        - [x] {rep.lower()}) =={env.variables.qcm[num][clerep]}== \n"
+            else:
+                modele+=f"        - [ ] {rep.lower()}) ~~{env.variables.qcm[num][clerep]}~~ \n"
+        return modele
+
+    @env.macro
+    def affiche_qcm(liste_question):
+        qcm = ""
+        for index in range(len(liste_question)):
+            qcm+=affiche_question(liste_question[index],index+1)
+        return qcm
+    
+    @env.macro
+    def qcm_chapitre(num_chap):
+        index=1
+        qcmc=""
+        for num in range(len(env.variables.qcm)):
+            if int(env.variables.qcm[num]["chapitre"])==num_chap:
+                qcmc+=affiche_question(num,index)
+                index+=1
+        return qcmc
