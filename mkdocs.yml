@@ -11,7 +11,7 @@ docs_dir: docs
 
 nav:
   - "🏡 Accueil": index.md
-  - ...
+  - ... | regex=^(?:(?!_REM.md).)*$
 
 
 theme:
