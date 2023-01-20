@@ -96,6 +96,10 @@ div.py_mk_terminal_f .terminal {
   width: 100%;
 }
 
+div[id*='fake_id'] {
+  padding: 10px 10px 0px 10px;
+}
+
 /* Test to decide which REPL is best */
 .py_mk_terminal_f_h {
 --color:var(--main-theme);

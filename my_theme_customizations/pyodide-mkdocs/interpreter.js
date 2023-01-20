@@ -1,6 +1,19 @@
 var debug_mode = false;
 var dict = {}; // Global dictionnary tracking the number of clicks
-var tagHdr = "#--- HDR ---#";
+var hdrPlaceholderRe = /#\s*-[\s|-]*HDR\s*-[\s|-]*#/i;
+
+function richTextFormat(content, style, color = "", background = "") {
+  return `[[${style};${color};${background}]${content}]`;
+}
+
+let error = (content) => richTextFormat(content, "b", "red");
+let warning = (content) => richTextFormat(content, "", "orange");
+let stress = (content) => richTextFormat(content, "b");
+let info = (content) => richTextFormat(content, "", "grey");
+let runScriptPrompt = info("%Script exécuté");
+
+let ps1 = ">>> ",
+  ps2 = "... ";
 
 function sleep(s) {
   return new Promise((resolve) => setTimeout(resolve, s));
@@ -144,7 +157,7 @@ async function pyterm(id, height) {
           let p = $.terminal.active().get_command();
           clear_console();
           $.terminal.active().echo(ps1 + p);
-          $.terminal.active().echo("[[;red;]KeyboardInterrupt]");
+          $.terminal.active().echo(error("KeyboardInterrupt"));
           term.set_command("");
           term.set_prompt(ps1);
         },
@@ -253,25 +266,25 @@ function countParenthesis(string, char = "(") {
   return countChar(string, char) - countChar(string, END[char]);
 }
 
-function generateAssertionLog(errLineLog, code) {
+function generateAssertionLog(errorLineInLog, code) {
   // PROBLEME s'il y a des parenthèses non correctement parenthésées dans l'expression à parser !
   var codeTable = code.split("\n"); // get assertion test
   console.log("generateAsssertionLog", codeTable);
-  errLineLog -= 1;
-  var endErrLineLog = errLineLog;
+  errorLineInLog -= 1;
+  var endErrLineLog = errorLineInLog;
   var countPar = 0;
   do {
     // multilines assertions
-    countPar += countParenthesis(codeTable[endErrLineLog]);
+    countPar += countParenthesis(codeTable[errorLineInLog]);
     endErrLineLog++;
   } while (countPar !== 0 && !/^(\s*assert)/.test(codeTable[endErrLineLog]));
   return `${codeTable
-    .slice(errLineLog, endErrLineLog)
+    .slice(errorLineInLog, endErrLineLog)
     .join(" ")
     .replace("assert ", "")}`;
 }
 
-function generateErrLog(errorTypeLog, errLineLog, code, src = 0) {
+function generateErrorLog(errorTypeLog, errorLineInLog, code, src = 0) {
   let errorTypes = {
     AssertionError: "Erreur avec les tests publics",
     SyntaxError: "Erreur de syntaxe",
@@ -294,28 +307,20 @@ function generateErrLog(errorTypeLog, errLineLog, code, src = 0) {
   errorTypeLog =
     errorTypeLog +
     (errorTypeLog.includes("Ellipsis") ? " (issue with the dots ...)" : "");
-  for (errorType in errorTypes) {
+  for (const errorType in errorTypes) {
     if (errorTypeLog.includes(errorType)) {
       if (errorType != "AssertionError") {
         // All Exceptions but assertions
-        return ` Python a renvoyé une '${errorTypes[errorType]}' à la ligne ${errLineLog}\n ---\n ${errorTypeLog}`;
-      } else {
-        if (errorTypeLog !== "AssertionError") {
-          // case : no Assertion description
-          return ` Python a renvoyé une '${errorTypes[errorType]}' à la ligne ${
-            errLineLog + src
-          }\n ---\n ${errorTypeLog}`;
-        } else {
-          // Assertion with description
-          errorTypeLog = `${errorTypeLog} : test '${generateAssertionLog(
-            errLineLog + src,
-            code
-          )}' failed`;
-          return ` Python a renvoyé une '${errorTypes[errorType]}' à la ligne ${
-            errLineLog + src
-          }\n ---\n ${errorTypeLog}`;
-        }
+        return error(errorTypes[errorType], errorLineInLog, errorTypeLog);
       }
+      // if no description in Assertion, we skip
+      if (errorTypeLog === "AssertionError") {
+        // Assertion with description : assert test, description
+        errorTypeLog = `${errorTypeLog} : test ${warning(
+          generateAssertionLog(errorLineInLog + src, code)
+        )} failed`;
+      }
+      return error(errorTypes[errorType], errorLineInLog + src, errorTypeLog);
     }
   }
 }
@@ -348,15 +353,12 @@ function generateLog(err, code, src = 0) {
   }
   console.log(errorTypeLog, errLineLog, code);
   console.log(src);
-  return generateErrLog(errorTypeLog, errLineLog, code, src);
+  return generateErrorLog(errorTypeLog, errLineLog, code, src);
 }
 
 const pluralize = (numberOfItems, singularForm, pluralForm = "s") => {
-  return numberOfItems == 1
-    ? singularForm
-    : pluralForm != "s"
-    ? pluralForm
-    : singularForm + "s";
+  let plural = pluralForm != "s" ? pluralForm : singularForm + "s";
+  return numberOfItems <= 1 ? singularForm : plural;
 };
 
 const enumerize = (liste) =>
@@ -388,12 +390,11 @@ async function evaluatePythonFromACE(code, editorName, mode) {
   let splitCode = code
     .replace(/#(\s*)Test(s?)[^\n]*/i, "#tests")
     .split("#tests"); // normalisation
-  var mainCode = splitCode[0],
-    assertionCode = splitCode[1];
-  console.log(splitCode, mainCode);
+  var mainCode = splitCode[0];
+  var assertionCode = splitCode[1];
   let lineShift = mainCode.split("\n").length;
 
-  $.terminal.active().echo(">>> Script exécuté : \n------");
+  $.terminal.active().echo(ps1 + runScriptPrompt);
 
   try {
     if (debug_mode) {
@@ -406,9 +407,7 @@ async function evaluatePythonFromACE(code, editorName, mode) {
       editorName
     );
 
-    await pyodide.runPythonAsync(
-      "from __future__ import annotations\n" + mainCode
-    ); // Running the code
+    pyodide.runPython(mainCode); // Running the code
     var stdout = pyodide.runPython("__sys__.stdout.getvalue()"); // Catching and redirecting the output
     var testDummy = mainCode.includes("dummy_");
     if (testDummy) {
@@ -453,24 +452,19 @@ async function evaluatePythonFromACE(code, editorName, mode) {
       stdout += "------";
     }
 
-    if (stdout !== "") $.terminal.active().echo(" " + stdout);
+    if (stdout !== "") $.terminal.active().echo(stdout);
 
     if (assertionCode !== undefined) {
-      await pyodide.runPythonAsync(
-        "from __future__ import annotations\n" + assertionCode
-      ); // Running the assertions
+      pyodide.runPython(assertionCode); // Running the assertions
       var stdout = pyodide.runPython("__sys__.stdout.getvalue()"); // Catching and redirecting the output
-      console.log("tout s'est bien passé");
-      if (!testDummy) $.terminal.active().echo(" " + stdout + "\n------\n");
+      if (!testDummy && stdout !== "") $.terminal.active().echo(stdout);
     }
   } catch (err) {
     console.log("err", err);
     // generateLog does the work
     // TODO : why was lineShift useful ?
     if (!testDummy)
-      $.terminal
-        .active()
-        .echo(generateLog(err, code, lineShift - 1) + "\n------\n");
+      $.terminal.active().echo(generateLog(err, code, lineShift - 1));
     // if (!testDummy) $.terminal.active().echo(generateLog(err, code, 0) + "\n------\n");
   }
 }
@@ -483,15 +477,17 @@ function restoreEscapedCharacters(codeContent) {
 }
 
 async function evaluateHdrFile(editorName) {
-  let pythonFileContent = document.getElementById(
+  let exerciseFileContent = document.getElementById(
     "content_" + editorName
   ).innerText;
-  if (pythonFileContent.includes(tagHdr)) {
-    const splitHdrPyFile = pythonFileContent.match(
-      new RegExp(tagHdr + "(.*)" + tagHdr)
+  if (hdrPlaceholderRe.test(exerciseFileContent)) {
+    const matchResults = exerciseFileContent.match(
+      new RegExp(hdrPlaceholderRe.source + "(.*)" + hdrPlaceholderRe.source)
     );
-    if (splitHdrPyFile !== null)
-      pyodide.runPython(restoreEscapedCharacters(splitHdrPyFile[1]));
+    if (matchResults !== null) {
+      let headerCode = matchResults[1];
+      pyodide.runPython(restoreEscapedCharacters(headerCode));
+    }
   }
 }
 
@@ -499,9 +495,10 @@ async function playSilent(editorName) {
   let ideClassDiv = document.getElementById("term_" + editorName).parentElement
     .parentElement;
   window.console_ready = await pyterm("#term_" + editorName, 150);
+  // gives the focus to the corresponding terminal
   $("#term_" + editorName)
     .terminal()
-    .focus(true); // gives the focus to the corresponding terminal
+    .focus(true);
 
   let stream = await ace.edit(editorName).getSession().getValue();
 
@@ -559,8 +556,33 @@ function download(editorName, scriptName) {
 
 function restart(editorName) {
   localStorage.removeItem(editorName);
-  let content = document.getElementById(`content_${editorName}`).innerText;
-  ace.edit(editorName).getSession().setValue(restoreEscapedCharacters(content));
+  let exerciseFileContent = document.getElementById(
+    `content_${editorName}`
+  ).innerText;
+  if (hdrPlaceholderRe.test(exerciseFileContent)) {
+    const matchResults = exerciseFileContent.match(
+      new RegExp(
+        hdrPlaceholderRe.source + "(.*)" + hdrPlaceholderRe.source + "(.*)"
+      )
+    );
+    if (matchResults === null) {
+      var exerciseCode =
+        `Missing HDR tag. Please check !\n\n` + exerciseFileContent;
+    } else {
+      let headerCode = matchResults[1];
+      var exerciseCode = matchResults[2];
+      let newline = "bksl-nl";
+      while (exerciseCode.startsWith(newline)) {
+        exerciseCode = exerciseCode.substring(newline.length);
+      }
+    }
+  } else {
+    var exerciseCode = exerciseFileContent;
+  }
+  ace
+    .edit(editorName)
+    .getSession()
+    .setValue(restoreEscapedCharacters(exerciseCode));
 }
 
 function save(editorName) {
@@ -687,6 +709,7 @@ async function checkAsync(editorName, mode) {
 
   var code = await interpret_code;
   $.terminal.active().clear();
+  $.terminal.active().echo(ps1 + runScriptPrompt);
 
   try {
     var testDummy = code.includes("dummy_");
@@ -710,7 +733,7 @@ async function checkAsync(editorName, mode) {
           joinLib.push(splitJoin(instruction, "#import dummy_lib_"));
       let nI = joinInstr.length;
       let nL = joinLib.length;
-      stdout = ">>> Script exécuté : \n------\n";
+      stdout = "";
       if (nI > 0)
         stdout += ` ${pluralize(nI, "La", "Les")} ${pluralize(
           nI,
@@ -731,16 +754,14 @@ async function checkAsync(editorName, mode) {
           "est",
           "sont"
         )} ${pluralize(nL == 1, "interdit")} pour cet exercice !\n`;
-      stdout += "------";
+      stdout += "";
     } else {
       let executed_code = await foreignModulesFromImports(
         code,
         { turtle: "pyo_js_turtle" },
         editorName
       );
-      await pyodide.runPythonAsync(
-        "from __future__ import annotations\n" + executed_code
-      ); // Running the code
+      pyodide.runPython(executed_code); // Running the code
       // pyodide.runPython("from __future__ import annotations\n"+code);    // Running the student code (no output)
 
       let unittest_code = restoreEscapedCharacters(
@@ -768,26 +789,26 @@ async function checkAsync(editorName, mode) {
 
                 for benchmark in numerous_benchmark:
                     failed = 0
-                    print(f">>> Test de la fonction ** {benchmark[0].split('(')[0].upper()} **")
+                    print(f">>> Test de la fonction [[b;;]{benchmark[0].split('(')[0].upper()}]")
                     
                     for k, test in enumerate(benchmark, 1):
                         if eval(test):
                             print(f'Test {k} réussi :  {test} ')
                         else:
-                            print(f'Test {k} échoué :  {test} ')
+                            print(f'[[b;orange;]Test {k} échoué] : {test}')
                             failed += 1
 
                     if not failed :
-                        print(f"Bravo vous avez réussi tous les tests {choice(success_smb)}")
+                        print(f"[[b;green;]Bravo] vous avez réussi tous les tests {choice(success_smb)}")
                     else :
-                        if failed == 1 : msg = f"{failed} test a échoué. "
-                        else : msg = f"{failed} tests ont échoué. "
+                        if failed == 1 : msg = f"{failed} test a [[b;orange;]échoué]. "
+                        else : msg = f"{failed} tests ont [[b;orange;]échoué]. "
                         print(msg + f"Reprenez votre code {choice(fail_smb)}")
                         global_failed += 1
             except :
                 if numerous_benchmark != []:
-                    print(f"- Fonctions manquantes ou noms de fonctions incorrectes.")
-                    print(f"- Respectez les noms indiqués dans l'énoncé.")
+                    print(f"[[b;red;]Erreur :] Fonctions manquantes ou noms de fonctions incorrectes.")
+                    print(f"[[b;red;]    ... ] Respectez les noms indiqués dans l'énoncé.")
                     global_failed += 1
                 else:
                     print(f"🙇🏻 pas de fichier de test... Si vous êtes sur de vous, continuez à cliquer sur le gendarme.")
@@ -800,10 +821,13 @@ async function checkAsync(editorName, mode) {
       } else {
         console.log("declaration", unittest_code);
         var global_failed = 0;
-        var testCodeTable = unittest_code.split("\n"); // splits test code into several lines
-        testCodeTable = testCodeTable.filter((e) => e != ""); // get rid of blank lines
+        // splits test code into several lines without blank lines
+        var testCodeTable = unittest_code
+          .split("\n")
+          .filter((line) => line != "");
+
         var testCodeTableMulti = []; // multiple lines code joined into one line
-        var line = 0;
+        let line = 0;
         let comment = false;
         console.log("587");
         while (line < testCodeTable.length) {
@@ -813,6 +837,9 @@ async function checkAsync(editorName, mode) {
           let contiBool = false;
           let lineStart = line;
 
+          // TODO : Comments are also with #
+          // WARNING : testCodeTable.startsWith doesn't take into account indented code
+          // This is for multiline assertions ?
           if (
             testCodeTable[line].startsWith('"""') ||
             testCodeTable[line].startsWith("'''")
@@ -865,32 +892,34 @@ async function checkAsync(editorName, mode) {
         }
 
         // number of assert BLOCKS
-        var nSecretTests = formattedAssertCode.filter(
+        var numberOfSecretTests = formattedAssertCode.filter(
           (x) => x.includes("assert") && !x.startsWith("#")
         ).length;
-        var nExtVar = formattedAssertCode.filter(
+        var numberOfGlobalVariables = formattedAssertCode.filter(
           (x) =>
             !x.includes("assert") && !x.startsWith("#") && !x.includes("def ")
         ).length;
 
         var nPassedDict = {};
-        var extVarData = {};
-        for (let i = 0; i < nSecretTests; i++) nPassedDict[i] = 0;
-        for (let i = 0; i < nExtVar; i++) extVarData[i] = 0;
+        var globalVariables = {};
+        for (let i = 0; i < numberOfSecretTests; i++) nPassedDict[i] = 0;
+        for (let i = 0; i < numberOfGlobalVariables; i++)
+          globalVariables[i] = 0;
 
-        console.log("627", formattedAssertCode);
+        console.log("912", formattedAssertCode);
 
         i = 0;
         let j = 0;
         for (let [line, command] of formattedAssertCode.entries()) {
           try {
-            pyodide.runPython(`${command}`);
+            console.log(line, command);
+            pyodide.runPython(command);
             if (
               !command.includes("assert") &&
               !command.startsWith("#") &&
               !command.includes("def ")
             ) {
-              extVarData[j] = [line, command];
+              globalVariables[j] = [line, command];
               j++;
             }
             if (command.includes("assert") && !command.startsWith("#")) {
@@ -905,10 +934,10 @@ async function checkAsync(editorName, mode) {
         }
 
         window.n_passed = nPassedDict;
-        window.ext_var_data = extVarData;
+        window.global_variables = globalVariables;
 
         pyodide.runPython(`
-from js import n_passed, ext_var_data
+from js import n_passed, global_variables
 import random
 import sys as __sys__
 import io as __io__
@@ -916,13 +945,13 @@ __sys__.stdout = __io__.StringIO()
 success_smb = ['🔥','✨','🌠','✅','🥇','🎖']
 
 n_passed_dict = n_passed.to_py()
-ext_var_data = ext_var_data.to_py()
+global_variables = global_variables.to_py()
 n_passed = list(map(lambda x: x[0],n_passed_dict.values())).count(-1)
 
 if n_passed == len(n_passed_dict):
-    print(f""">>> Bravo {random.choice(success_smb)} : vous avez réussi tous les tests. \n === Penser à lire le corrigé et les commentaires ===""")
+    print(f"""[[b;green;]Bravo] {random.choice(success_smb)} : vous avez réussi tous les tests. \n\nPenser à lire le corrigé et les commentaires.""", end="")
 else :
-    print(f""">>> Vérification : pour {len(n_passed_dict)} tests, il y a {n_passed} réussite{"s" if n_passed > 1 else ""} \n------""")
+    print(f"""[[b;orange;]Dommage] : pour {len(n_passed_dict)} test{"s" if len(n_passed_dict) > 1 else ""}, il y a {n_passed} réussite{"s" if n_passed > 1 else ""}""")
 
     def extract_log(dico):
         for key, value in n_passed_dict.items():
@@ -940,80 +969,75 @@ else :
 
     key, log, err_line = extract_log(n_passed_dict)
 
-    if (ext_var := extract_external_var(log, err_line, ext_var_data)) != "":
-        print(f"""Échec du test n°{key} : \n\n{extract_external_var(log, err_line, ext_var_data)} \n\n{log}""")
+    if (ext_var := extract_external_var(log, err_line, global_variables)) != "":
+        print(f"""Échec du test n°{key} : \n\n{extract_external_var(log, err_line, global_variables)} \n\n{log}""", end="")
     else:
-        print(f"""Échec du test n°{key} : \n\n{log}""")
-
-print(f"""------""", end="")
+        print(f"""Échec du test n°{key} : \n\n{log}""", end="")
 `);
-        if (nSecretTests == success) {
+        if (numberOfSecretTests == success) {
           var output = 0;
         }
-      }
 
-      var stdout = pyodide.runPython(
-        "import sys as __sys__\n__sys__.stdout.getvalue()"
-      ); // Catching and redirecting the output
-      let elementCounter = document.getElementById("test_term_" + editorName);
-      let parentCounter = elementCounter.parentElement.dataset.max;
-      const nAttempts = parentCounter;
-      console.log("730", "all passed");
+        var stdout = pyodide.runPython(
+          "import sys as __sys__\n__sys__.stdout.getvalue()"
+        ); // Catching and redirecting the output
+        let elementCounter = document.getElementById("test_term_" + editorName);
+        let parentCounter = elementCounter.parentElement.dataset.max;
+        const nAttempts = parentCounter;
+        console.log("730", "all passed");
 
-      while (elementCounter.className !== "compteur") {
-        elementCounter = elementCounter.nextElementSibling;
-      }
-      let [rootName, idEditor] = editorName.split("_");
-      if (output === 0) dict[idEditor] = nAttempts;
-      else dict[idEditor] = 1 + (idEditor in dict ? dict[idEditor] : 0);
+        while (elementCounter.className !== "compteur") {
+          elementCounter = elementCounter.nextElementSibling;
+        }
+        let [rootName, idEditor] = editorName.split("_");
+        if (output === 0) dict[idEditor] = nAttempts;
+        else dict[idEditor] = 1 + (idEditor in dict ? dict[idEditor] : 0);
 
-      if (nAttempts !== "\u221e") {
-        // INFTY symbol
-        elementCounter.textContent =
-          Math.max(0, nAttempts - dict[idEditor]) + "/" + parentCounter;
-      } else {
-        elementCounter.textContent = parentCounter + "/" + parentCounter;
-      }
-      console.log("747", "all passed");
+        console.log(output, dict, nAttempts);
 
-      if (
-        dict[idEditor] == nAttempts &&
-        !document.getElementById("solution_" + editorName)
-      ) {
-        let correctionExists = $("#corr_content_" + editorName).text(); // Extracting url from the div before Ace layer
+        if (nAttempts !== "\u221e") {
+          // INFTY symbol
+          elementCounter.textContent =
+            Math.max(0, nAttempts - dict[idEditor]) + "/" + parentCounter;
+        } else {
+          elementCounter.textContent = parentCounter + "/" + parentCounter;
+        }
+        console.log("747", "all passed");
+
         if (
-          correctionExists !== "" ||
-          document.getElementById("corr_content_" + editorName).dataset
-            .strudel != ""
+          dict[idEditor] == nAttempts &&
+          !document.getElementById("solution_" + editorName)
         ) {
-          showCorrection(editorName);
+          let correctionExists = $("#corr_content_" + editorName).text(); // Extracting url from the div before Ace layer
+          if (
+            correctionExists !== "" ||
+            document.getElementById("corr_content_" + editorName).dataset
+              .strudel != ""
+          ) {
+            showCorrection(editorName);
+          }
         }
-      }
 
-      console.log("756", "Correction should be shown");
-      let nlines = calcTermSize(stdout, mode);
-      let editor = ace.edit(editorName);
-      let stream = await editor.getSession().getValue();
-      if (editor.session.getLength() <= nlines && mode === "_v") {
-        const nslash = editor.session.getLength() - nlines + 3; // +3 takes into account shift and newlines
-        for (let i = 0; i < nslash; i++) {
-          stream += "\n";
+        let nlines = calcTermSize(stdout, mode);
+        let editor = ace.edit(editorName);
+        let stream = await editor.getSession().getValue();
+        if (editor.session.getLength() <= nlines && mode === "_v") {
+          const nslash = editor.session.getLength() - nlines + 3; // +3 takes into account shift and newlines
+          for (let i = 0; i < nslash; i++) {
+            stream += "\n";
+          }
+          editor.session.setValue(stream); // set value and reset undo history
         }
-        editor.session.setValue(stream); // set value and reset undo history
+        console.log("767", "Done, all good");
       }
-      console.log("767", "Done, all good");
     }
     $.terminal.active().echo(stdout);
+
+    console.log("all went well");
   } catch (err) {
     // Python not correct.
     err = err.toString().split("\n").slice(-7).join("\n");
-    console.log("fin");
-    $.terminal
-      .active()
-      .echo(
-        ">>> Script exécuté : \n------\n" +
-          generateLog(err, code, 0) +
-          "\n------\n"
-      );
+    console.log("Error triggered", err);
+    $.terminal.active().echo(generateLog(err, code, 0));
   }
 }

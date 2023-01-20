@@ -1,4 +1,4 @@
-var tagHdr = "#--- HDR ---#";
+var hdrPlaceholderRe = /#\s*-[\s|-]*HDR\s*-[\s|-]*#/i;
 
 var _slate = document.getElementById("ace_palette").dataset.aceDarkMode;
 var _default = document.getElementById("ace_palette").dataset.aceLightMode;
@@ -70,28 +70,31 @@ function createTheme() {
 
 $("[id^=editor_]").each(function () {
   let number = this.id.split("_").pop();
-  let url_pyfile = $("#content_" + this.id).text(); // Extracting url from the div before Ace layer
+  let exerciseFileContent = $("#content_" + this.id).text(); // Extracting url from the div before Ace layer
 
-  if (url_pyfile.includes(tagHdr)) {
-    // test if a header code is present
-    splitHdrPyFile = url_pyfile.match(
-      new RegExp(tagHdr + "(.*)" + tagHdr + "(.*)")
+  let isHeaderPlaceHolderPresent = hdrPlaceholderRe.test(exerciseFileContent);
+  if (isHeaderPlaceHolderPresent) {
+    const matchResults = exerciseFileContent.match(
+      new RegExp(
+        hdrPlaceholderRe.source + "(.*)" + hdrPlaceholderRe.source + "(.*)"
+      )
     );
-    if (splitHdrPyFile === null) {
-      var pyFile = `Missing ${tagHdr} tag. Please check !\n\n` + url_pyfile;
+    if (matchResults === null) {
+      var exerciseCode =
+        `Missing ${tagHdr} tag. Please check !\n\n` + exerciseFileContent;
     } else {
-      hdrFile = splitHdrPyFile[1];
-      var pyFile = splitHdrPyFile[2];
-      newline = "bksl-nl";
-      while (pyFile.startsWith(newline)) {
-        pyFile = pyFile.substring(newline.length);
+      let headerCode = matchResults[1];
+      var exerciseCode = matchResults[2];
+      let newline = "bksl-nl";
+      while (exerciseCode.startsWith(newline)) {
+        exerciseCode = exerciseCode.substring(newline.length);
       }
     }
   } else {
-    var pyFile = url_pyfile;
+    var exerciseCode = exerciseFileContent;
   }
 
-  pyFile = pyFile
+  exerciseCode = exerciseCode
     .replace(/bksl-nl/g, "\n")
     .replace(/py-und/g, "_")
     .replace(/py-str/g, "*");
@@ -119,7 +122,7 @@ $("[id^=editor_]").each(function () {
       { win: "Alt-Tab", mac: "Alt-Tab" },
       "startAutocomplete"
     );
-    editor.getSession().setValue(pyFile);
+    editor.getSession().setValue(exerciseCode);
     editor.commands.addCommand({
       name: "commentTests",
       bindKey: { win: "Ctrl-I", mac: "Cmd-I" },
@@ -127,9 +130,6 @@ $("[id^=editor_]").each(function () {
     });
   }
   window.IDE_ready = createACE(idEditor); // Creating Ace Editor #idEditor
-
-  // console.log(editor.getSession().getValue())
-  // console.log(/#(\s*)Test(s?)[^\n]*/i.test(editor.getSession().getValue()))
 
   var nChange = 0;
   let editor = ace.edit(idEditor);
@@ -152,12 +152,14 @@ $("[id^=editor_]").each(function () {
   if (storedCode !== null) ace.edit(idEditor).getSession().setValue(storedCode);
 
   // Create 6 empty lines
-  if (url_pyfile === "")
+  if (exerciseFileContent === "")
     ace.edit(idEditor).getSession().setValue("\n".repeat(6));
 
   // A correction Element always exists (can be void)
-  // A correction Element always exists (can be void)
-  prevNode = document.getElementById("corr_content_" + idEditor);
+  let contentNode = document.getElementById("content_" + idEditor);
+  if (contentNode.childNodes.length === 0) return;
+
+  let prevNode = document.getElementById("corr_content_" + idEditor);
   var key = prevNode.dataset.strudel;
   var workingNode = prevNode;
   var remNode = document.createElement("div");
@@ -203,6 +205,7 @@ $("[id^=editor_]").each(function () {
     } else {
       // Search for the rem DIV.
       workingNode = workingNode.nextElementSibling;
+      console.log("BLABLA", workingNode.innerHTML, prevNode.innerHTML);
       // console.log(prevNode, workingNode)
       // If workingNode is a <p> (admonition), we continue
       // else, we are outside an admonition
@@ -213,18 +216,26 @@ $("[id^=editor_]").each(function () {
         remNode.innerHTML = "Pas de remarque particulière.";
       else {
         var tableElements = [];
-        while (workingNode !== null) {
-          tableElements.push(workingNode);
-          workingNode = workingNode.nextElementSibling;
-        }
+        currentNode = workingNode.nextElementSibling;
+        workingNode.remove();
+        if (currentNode === null) {
+          remNode.innerHTML = "Pas de remarque particulière.";
+        } else {
+          while (currentNode.nextElementSibling !== null) {
+            tableElements.push(currentNode);
+            currentNode = currentNode.nextElementSibling;
+          }
+          currentNode.remove();
 
-        for (let i = 0; i < tableElements.length; i++)
-          remNode.append(tableElements[i]);
+          for (let i = 0; i < tableElements.length; i++) {
+            remNode.append(tableElements[i]);
+          }
+        }
       }
     }
 
     if (key != "") {
-      /* another possible condition is this : 
+      /* another possible condition is this :
     !remNode.innerHTML.includes('<h1'))  */
       remNode = document.createElement("div");
       remNode.innerHTML = `Vous trouverez une analyse détaillée de la solution <a href = "../${md5(
@@ -295,15 +306,6 @@ $(".highlight").bind("copy paste", function (e) {
   return false;
 });
 
-// $('[id^=qcm_]').each(function() {
-//     console.log(this.id)
-//     let number = this.id.split('_').pop();
-//     // let url_pyfile = $('#qcm_'+this.id) // Extracting url from the div before Ace layer
-//     console.log(number)
-// });
-
-// document.querySelector('#qcm_0').addEventListener('click', ()=> {console.log('lick')})
-
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("pre code.qcm").forEach((el) => {
     hljs.highlightElement(el);
@@ -311,27 +313,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function randomizeQCM(el) {
-  let multipleChoiceAnswers = el.childNodes;
+  let qcmAns = el.childNodes;
   if (el.dataset.shuffle == 1) {
-    for (let i = multipleChoiceAnswers.length; i >= 0; i--)
-      el.appendChild(multipleChoiceAnswers[Math.floor(Math.random() * i)]);
+    for (let i = qcmAns.length; i >= 0; i--)
+      el.appendChild(qcmAns[Math.floor(Math.random() * i)]);
   }
 }
 
-document.querySelectorAll("[id^=qcm_]").forEach((el) => {
-  randomizeQCM(el);
+// document.querySelectorAll("[id^=qcm_]").forEach((el) => {
+//     randomizeQCM(el)
 
-  for (let element of el.children) {
-    element.addEventListener("click", () => {
-      if (!element.firstChild.disabled) {
-        if (!maxAnswerReached(el))
-          element.firstChild.checked = !element.firstChild.checked;
-        else if (element.firstChild.checked)
-          element.firstChild.checked = !element.firstChild.checked;
-      }
-    });
-  }
-});
+//     for (let element of el.children) {
+//         element.addEventListener('click', () => {
+//         // element.firstChild.disabled = true
+//         if (!element.firstChild.disabled) {
+//             if (!maxAnswerReached(el)) element.firstChild.checked = !(element.firstChild.checked)
+//             else if (element.firstChild.checked) element.firstChild.checked = !(element.firstChild.checked)
+//     }})
+//     }
+// });
 
 function nTotalAnswers(el) {
   let somme = 0;
@@ -365,100 +365,97 @@ function nRightAnswers(el) {
   return somme;
 }
 
-// document.getElementById("valider").addEventListener("click", () => {
-//     let elScore = document.getElementById("score");
-//     let totalScore = nTotalAnswers(elScore.parentElement);
-//     let studentScore = nRightAnswers(elScore.parentElement);
-//     if (studentScore/totalScore > 0.5) {
-//         elScore.innerHTML = `Bon travail ! Score : ${studentScore} / ${totalScore}`;
-//     } else {
-//         elScore.innerHTML = `Cours à reprendre. Score : ${studentScore} / ${totalScore}`;
-//     }
-// })
-
-// document.getElementById("recharger").addEventListener("click", () => {
-//     let elScore = document.getElementById("score")
-//     elScore.innerHTML = "";
-//     for (let question of elScore.parentElement.children) {
-//         if (question.className == "wrapper_qcm") {
-//             for (let answer of question.children) {
-//                 answer.firstChild.classList.remove("reveal")
-//                 answer.firstChild.disabled = false;
-//                 answer.firstChild.checked = false;
-//             }
-//             randomizeQCM(question)
-//         }
-//     }
-// })
-
 document.querySelectorAll("[id^=valider_]").forEach((el) => {
   let number = el.id.split("_").pop();
   el.addEventListener("click", () => {
     let elScore = document.getElementById(`score_${number}`);
-    let totalScore = nTotalAnswers(elScore.parentElement);
-    let studentScore = nRightAnswers(elScore.parentElement);
-    if (studentScore / totalScore > 0.5) {
-      elScore.innerHTML = `Bon travail ! Score : ${studentScore} / ${totalScore}`;
-    } else {
-      elScore.innerHTML = `Cours à reprendre. Score : ${studentScore} / ${totalScore}`;
+    let totalScore = 0;
+    let studentScore = 0;
+    for (let divQCM of elScore.parentElement.children) {
+      totalScore += nTotalAnswers(divQCM);
+      studentScore += nRightAnswers(divQCM);
     }
+    if (studentScore / totalScore > 0.5)
+      elScore.innerHTML = `Bon travail ! Score : ${studentScore} / ${totalScore}`;
+    else
+      elScore.innerHTML = `Cours à reprendre. Score : ${studentScore} / ${totalScore}`;
   });
 });
 
-function forceFormat(htmlAttribute) {
-  return htmlAttribute.slice(3).toLowerCase();
+function normalize_var(html_attribute) {
+  return html_attribute.slice(3).toLowerCase();
 }
 
-function createDictionnary(dataset) {
-  let dictionnaryOfVariables = {};
-  for (let htmlAttribute in dataset) {
-    if (htmlAttribute.startsWith("var")) {
-      variableName = forceFormat(htmlAttribute);
-      dictionnaryOfVariables[variableName] = dataset[htmlAttribute].startsWith(
-        "["
-      )
-        ? JSON.parse(dataset[htmlAttribute])
-        : JSON.parse("[" + dataset[htmlAttribute] + "]");
+function create_dictionnary(dataset) {
+  let var_dictionnary = {};
+  for (let html_attr in dataset) {
+    if (html_attr.startsWith("var")) {
+      var_name = normalize_var(html_attr); // pas de majuscule dans les noms de variables.
+      let curedData = dataset[html_attr].replaceAll("'", '"');
+      var_dictionnary[var_name] = curedData.startsWith("[")
+        ? JSON.parse(curedData)
+        : JSON.parse("[" + curedData + "]");
     }
   }
-  return dictionnaryOfVariables;
+  return var_dictionnary;
 }
 
-function pickRandomValue(values) {
-  return values[Math.floor(Math.random() * values.length)];
+function pick_rnd_value(list_values) {
+  return list_values[Math.floor(Math.random() * list_values.length)];
 }
 
-function pickRandomValues(dictionnaryOfVariables) {
-  let dictionnaryOfPickedVariables = {};
-  for (let variableName in dictionnaryOfVariables)
-    dictionnaryOfPickedVariables[variableName] = pickRandomValue(
-      dictionnaryOfVariables[variableName]
-    );
-  return dictionnaryOfPickedVariables;
+function pick_rnd_values(var_dict) {
+  let picked_var_dict = {};
+  for (let var_name in var_dict)
+    picked_var_dict[var_name] = pick_rnd_value(var_dict[var_name]);
+  return picked_var_dict;
 }
 
-function processRandomFormula(htmlElement, dictionnaryOfVariables) {
-  if (dictionnaryOfVariables !== {}) {
-    // there are variable parts
+function process_rnd_formula(htmlElement, var_dict, idQ = "") {
+  if (Object.keys(var_dict).length !== 0) {
+    // there is variable parts
     if (MathJax.startup.document.getMathItemsWithin(htmlElement)[0]) {
       // there is a math formula
-      // console.log(htmlElement, htmlElement.htmlFor)
       let formula =
         MathJax.startup.document.getMathItemsWithin(htmlElement)[0].math;
-      for (let variableName in dictionnaryOfVariables) {
-        if (formula.includes(`{${variableName}}`))
+
+      if (htmlElement.htmlFor !== undefined) {
+        if (sessionStorage.getItem(`${htmlElement.htmlFor}`) === null)
           sessionStorage.setItem(`${htmlElement.htmlFor}`, formula);
         else formula = sessionStorage.getItem(`${htmlElement.htmlFor}`);
+      } else {
+        if (sessionStorage.getItem(idQ) === null)
+          sessionStorage.setItem(idQ, formula);
+        else formula = sessionStorage.getItem(idQ);
       }
-      for (let variableName in dictionnaryOfVariables)
-        formula = formula.replace(
-          `{${variableName}}`,
-          dictionnaryOfVariables[variableName]
-        );
-      console.log(formula);
-      htmlElement.innerHTML = `\\(${formula}\\)`;
+
+      for (let var_name in var_dict)
+        formula = formula.replace(`{${var_name}}`, var_dict[var_name]);
+
+      if (formula.includes("|")) {
+        let word2change = formula.match(/\|([\W|\w]*)\|/);
+        formula = formula.replace(`|${word2change[1]}|`, eval(word2change[1])); // Why not using Pyodide ???????
+      }
+      return `\\(${formula}\\)`;
+    } else {
+      let formula = htmlElement.textContent;
+
+      if (htmlElement.htmlFor !== undefined) {
+        if (sessionStorage.getItem(`${htmlElement.htmlFor}`) === null)
+          sessionStorage.setItem(`${htmlElement.htmlFor}`, formula);
+        else formula = sessionStorage.getItem(`${htmlElement.htmlFor}`);
+      } else {
+        if (sessionStorage.getItem(idQ) === null)
+          sessionStorage.setItem(idQ, formula);
+        else formula = sessionStorage.getItem(idQ);
+      }
+
+      for (let var_name in var_dict)
+        formula = formula.replace(`{${var_name}}`, var_dict[var_name]);
+
+      return formula;
     }
-  }
+  } else return htmlElement.innerHTML;
 }
 
 document.querySelectorAll("[id^=recharger_]").forEach((el) => {
@@ -466,25 +463,99 @@ document.querySelectorAll("[id^=recharger_]").forEach((el) => {
   el.addEventListener("click", () => {
     let elScore = document.getElementById(`score_${number}`);
     elScore.innerHTML = "";
-    for (let question of elScore.parentElement.children) {
-      if (question.className == "wrapper_qcm") {
-        let dictionnaryOfVariables = createDictionnary(question.dataset);
-        var dictionnaryOfPickedVariables = pickRandomValues(
-          dictionnaryOfVariables
-        );
 
-        for (let answer of question.children) {
-          answer.firstChild.classList.remove("reveal");
-          answer.firstChild.disabled = false;
-          answer.firstChild.checked = false;
-          // answer.lastChild.innerHTML =
-          processRandomFormula(answer.lastChild, dictionnaryOfPickedVariables);
+    for (let divQCM of elScore.parentElement.children) {
+      if (divQCM.className == "setQCM") {
+        let var_dictionnary = create_dictionnary(divQCM.lastChild.dataset);
+        var picked_var_dict = pick_rnd_values(var_dictionnary);
+        for (let question of divQCM.children) {
+          if (question.className == "wrapper_qcm") {
+            for (let answer of question.children) {
+              answer.firstChild.classList.remove("reveal");
+              answer.firstChild.disabled = false;
+              answer.firstChild.checked = false;
+              answer.lastChild.innerHTML = process_rnd_formula(
+                answer.lastChild,
+                picked_var_dict
+              );
+            }
+          }
+          if (question.classList.contains("questionQCM")) {
+            let numberQ = question.nextSibling.id.split("_").pop();
+
+            currentHTML = "";
+            let idQ = 0;
+            for (let node of question.childNodes) {
+              if (node.nodeName == "MJX-CONTAINER") {
+                currentHTML += process_rnd_formula(
+                  node,
+                  picked_var_dict,
+                  numberQ + "_QCM_" + idQ
+                );
+                idQ += 1;
+              } else if (sessionStorage.getItem(numberQ + "_QCM_txt_" + idQ)) {
+                currentHTML += process_rnd_formula(
+                  node,
+                  picked_var_dict,
+                  numberQ + "_QCM_txt_" + idQ
+                );
+                idQ += 1;
+              } else currentHTML += node.nodeValue;
+            }
+            question.innerHTML = currentHTML;
+          }
+          randomizeQCM(question);
         }
-        MathJax.typeset();
-
-        // for (let i in dictionnaryOfVariables['p']) console.log(i)
-        randomizeQCM(question);
       }
     }
+    MathJax.typeset();
   });
+});
+
+document.querySelectorAll("[id^=qcm_]").forEach((el) => {
+  let number = el.id.split("_").pop();
+  setTimeout(function () {
+    let var_dictionnary = create_dictionnary(el.dataset);
+    var picked_var_dict = pick_rnd_values(var_dictionnary);
+    currentHTML = "";
+    let idQ = 0;
+    for (let node of el.previousSibling.childNodes) {
+      if (node.nodeName == "MJX-CONTAINER") {
+        currentHTML += process_rnd_formula(
+          node,
+          picked_var_dict,
+          number + "_QCM_" + idQ
+        );
+        idQ += 1;
+      } else if (node.textContent.includes("{")) {
+        currentHTML += process_rnd_formula(
+          node,
+          picked_var_dict,
+          number + "_QCM_txt_" + idQ
+        );
+        idQ += 1;
+      } else currentHTML += node.nodeValue;
+    }
+    el.previousSibling.innerHTML = currentHTML;
+
+    for (let answer of el.children)
+      answer.lastChild.innerHTML = process_rnd_formula(
+        answer.lastChild,
+        picked_var_dict
+      );
+    MathJax.typeset(), 200;
+  });
+
+  randomizeQCM(el);
+
+  for (let element of el.children) {
+    element.addEventListener("click", () => {
+      if (!element.firstChild.disabled) {
+        if (!maxAnswerReached(el))
+          element.firstChild.checked = !element.firstChild.checked;
+        else if (element.firstChild.checked)
+          element.firstChild.checked = !element.firstChild.checked;
+      }
+    });
+  }
 });
