@@ -1,5 +1,5 @@
-site_name: "NSI Saint-Aspais Outils"
-site_url: "https://mcoilhac.forge.aeif.fr/outils/"
+site_name: "NSI Outils"
+site_url: "https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/"
 site_description: Un modèle avec mkdocs
 site_author: Mireille Coilhac
 
