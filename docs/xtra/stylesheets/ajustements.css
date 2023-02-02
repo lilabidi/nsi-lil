@@ -42,3 +42,8 @@
     -webkit-mask-image: var(--md-admonition-icon--conclu);
             mask-image: var(--md-admonition-icon--conclu);
     }
+
+.center {
+    display: block;
+    margin: 0 auto;
+}
