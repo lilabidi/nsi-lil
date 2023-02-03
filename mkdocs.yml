@@ -1,7 +1,7 @@
-site_name: "NSI Outils"
+site_name: "Modèle de site avec Python"
 site_url: "https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/"
 site_description: Un modèle avec mkdocs
-site_author: Mireille Coilhac
+site_author: Nom d'auteur
 
 copyright: |
     Mireille COILHAC
