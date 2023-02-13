@@ -1,7 +1,7 @@
 site_name: "Modèle de site avec Python"
-site_url: !ENV[CI_PAGES_URL, "http://127.0.0.1:8000/"]
+site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
 site_description: Un modèle avec mkdocs
-site_author: !ENV[CI_COMMIT_AUTHOR, "Nom d'auteur"]
+site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
 
 copyright: |
     Mireille COILHAC
