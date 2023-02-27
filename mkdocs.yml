@@ -1,11 +1,11 @@
 site_name: "Modèle de site avec Python"
-site_url: "https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/"
+site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
 site_description: Un modèle avec mkdocs
-site_author: Nom d'auteur
+site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
 
 copyright: |
     Mireille COILHAC
-    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>.
+    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>.
 
 docs_dir: docs
 
