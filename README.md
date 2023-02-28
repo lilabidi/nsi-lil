@@ -1,6 +1,6 @@
 Ce fichier est à éditer lors de la première utilisation du projet.
 
-Le modèle et les travaux dérivés sont sous licence CC-by-sa
+Le modèle et les travaux dérivés sont sous licence CC-nc-by-sa
 
 Le rendu se trouve ici :  https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/
 
