@@ -83,7 +83,7 @@ $("[id^=editor_]").each(function () {
       var exerciseCode =
         `Missing ${tagHdr} tag. Please check !\n\n` + exerciseFileContent;
     } else {
-      let headerCode = matchResults[1];
+      let _ = matchResults[1];
       var exerciseCode = matchResults[2];
       let newline = "bksl-nl";
       while (exerciseCode.startsWith(newline)) {
@@ -94,10 +94,11 @@ $("[id^=editor_]").each(function () {
     var exerciseCode = exerciseFileContent;
   }
 
-  exerciseCode = exerciseCode
-    .replace(/bksl-nl/g, "\n")
-    .replace(/py-und/g, "_")
-    .replace(/py-str/g, "*");
+  exerciseCode = restoreEscapedCharacters(exerciseCode);
+
+  let ideMaximumSize = document.getElementById(this.id).parentElement
+    .parentElement.dataset.max_size;
+  console.log(this.id, ideMaximumSize);
 
   let idEditor = "editor_" + number;
   function createACE(idEditor) {
@@ -106,7 +107,7 @@ $("[id^=editor_]").each(function () {
       theme: createTheme(),
       mode: "ace/mode/python",
       autoScrollEditorIntoView: true,
-      maxLines: 30,
+      maxLines: ideMaximumSize,
       minLines: 6,
       tabSize: 4,
       printMargin: false, // hide ugly margins...
@@ -117,12 +118,12 @@ $("[id^=editor_]").each(function () {
       enableSnippets: true,
       enableLiveAutocompletion: false,
     });
-    // editor.commands.bindKey({win: 'Tab', mac: 'Tab'}, 'startAutocomplete')
     editor.commands.bindKey(
       { win: "Alt-Tab", mac: "Alt-Tab" },
       "startAutocomplete"
     );
     editor.getSession().setValue(exerciseCode);
+    editor.resize();
     editor.commands.addCommand({
       name: "commentTests",
       bindKey: { win: "Ctrl-I", mac: "Cmd-I" },

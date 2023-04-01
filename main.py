@@ -408,6 +408,7 @@ def define_env(env):
         mode: str = "",
         MAX: Union[int, Literal["+"]] = 5,
         SANS: str = "",
+        SIZE: int = 30,
     ) -> str:
         """
         @brief : Create an IDE (Editor+Terminal) within an Mkdocs document. {script_name}.py is loaded on the editor if present.
@@ -438,6 +439,7 @@ def define_env(env):
             {
                 "class": "py_mk_ide",
                 "data-max": f"{allowed_number_of_attempts}",
+                "data-max_size": f"{SIZE}",
                 "data-exclude": f'{"eval,exec" + format_excluded_instructions(SANS)}',
             },
         )
