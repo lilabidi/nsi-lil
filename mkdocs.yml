@@ -39,7 +39,7 @@ theme:
             name: Passer au mode jour
     features:
         - navigation.instant
-        - navigation.tabs
+        # - navigation.tabs   Pour avoir le menu vertical il faut supprimer ça
         - navigation.top
         - toc.integrate
         - header.autohide
