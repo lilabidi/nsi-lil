@@ -9,4 +9,4 @@ La fonction `addition` prend en paramètres deux nombres entiers ou flottants, e
 
 ???+ question "Compléter ci-dessous"
 
-    {{ IDE('addition') }}
+    {{ IDE('scripts/addition') }}
