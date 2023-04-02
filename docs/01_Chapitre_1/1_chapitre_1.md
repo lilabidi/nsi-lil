@@ -1,6 +1,6 @@
 ---
 author: Votre nom
-title: Chapitre 1
+title: Chapitre 1 : Python
 ---
 
 ## I. Paragraphe 1 : 
