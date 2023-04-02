@@ -7,6 +7,6 @@ Le site est hébergé par la forge de [l'*Association des Enseignants d'Informat
 
 Le site est construit avec [`mkdocs`](https://www.mkdocs.org/) et en particulier [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/).
 
-😀 Un grand merci à  Vincent-Xavier Jumel et Vincent Bouillot qui ont réalisé la partie technique de ce site, et qui m'ont beaucoup aidé pour les mises à jour.
+😀 Un grand merci à  Vincent-Xavier Jumel et Vincent Bouillot qui ont réalisé la partie technique de ce site, et qui m'ont beaucoup aidé pour les mises à jour. Merci également à Charles Poulmaire pour ses relectures attentives et ses conseils judicieux.
 
-Le logo e-nsi fait partie de mkdocs sous la référence :material-application-variable:
+Le logo e-nsi fait partie de mkdocs sous la référence `:material-application-variable:` 
