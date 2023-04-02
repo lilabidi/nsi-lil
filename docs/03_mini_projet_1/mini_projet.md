@@ -10,9 +10,6 @@ tags:
 
 ![morse](images/morse.png){ width=40%; : .center }
 
-Le texte se place **en dessous** de l'image centrée.
-
-
 
 !!! info "Utilisation d'un dictionnaire"
 
