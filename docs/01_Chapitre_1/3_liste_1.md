@@ -9,4 +9,4 @@ La fonction `premier` prend en paramètres une liste Python **non vide** et renv
 
 ???+ question "Compléter ci-dessous"
 
-  {{ IDE('premier') }}
+    {{ IDE('premier') }}
