@@ -4,8 +4,10 @@ site_description: Un modèle avec mkdocs
 site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
 
 copyright: |
-    Mireille COILHAC
-    <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>.
+    Association <a href="https://aeif.fr">AEIF</a>
+    <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br/>
+    Hébergé sur la forge gérée par l'<a href="https://aeif.fr">AEIF</a>
+
 
 docs_dir: docs
 
