@@ -1,6 +1,7 @@
 site_name: "Modèle de site avec Python"
-site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
 site_description: Un modèle avec mkdocs
+
+site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
 site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
 repo_url: !ENV [CI_PROJECT_URL]
 edit_uri: !ENV [EDIT_VARIABLE]
@@ -100,7 +101,7 @@ markdown_extensions:
 
 extra:
     social:
-        - icon: fontawesome/solid/paper-plane
+        - icon: fontawesome/regular/envelope
           link: mailto:votre.mail@ac-academie.fr
           name: Écrire à l'auteur
 
