@@ -107,7 +107,7 @@ extra:
 
         - icon: fontawesome/brands/gitlab
           link: !ENV [CI_PROJECT_ROOT_NAMESPACE]
-          name: Enseignants de NSI
+          name: AEIF
 
 
 
