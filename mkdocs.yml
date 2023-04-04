@@ -96,8 +96,8 @@ markdown_extensions:
         permalink: ⚓︎
         toc_depth: 2
 
-#extra:
-    #social:
+extra:
+    social:
         #- icon: fontawesome/brands/linux
          # link: https://linuxfr.org/
           #name: Promouvoir les Logiciels libres
@@ -106,9 +106,9 @@ markdown_extensions:
          # link: https://fr.wikipedia.org
          # name: L'encyclopédie libre que chacun peut améliorer
 
-        #- icon: fontawesome/solid/paper-plane
-        #  link: mailto:votre.mail@ac-academie.fr
-        #  name: Écrire à l'auteur
+        - icon: fontawesome/solid/paper-plane
+          link: mailto:votre.mail@ac-academie.fr
+          name: Écrire à l'auteur
 
 
 
