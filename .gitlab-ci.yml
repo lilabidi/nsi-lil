@@ -26,8 +26,6 @@ build:
   artifacts:
     paths:
       - site
-    reports:
-      dotenv: build.env
 
 pages:review:
   stage: review
