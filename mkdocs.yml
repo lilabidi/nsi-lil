@@ -3,7 +3,7 @@ site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
 site_description: Un modèle avec mkdocs
 site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
 
-edit_uri: !ENV [CI_PROJECT_ROOT_NAMESPACE]/-/tree/main/docs
+edit_uri: "!ENV [CI_PROJECT_ROOT_NAMESPACE]/-/tree/main/docs"
 
 copyright: |
     Association <a href="https://aeif.fr">AEIF</a>
