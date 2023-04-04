@@ -7,6 +7,7 @@ stages:
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  EDIT_VARIABLE: "$CI_PROJECT_URL/-/tree/main/docs"
 cache:
   paths:
     - .cache/pip
@@ -75,7 +76,6 @@ pages:
   dependencies:
     - build
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
     - if: $CI_COMMIT_REF_NAME == 'main'
   artifacts:

@@ -1,6 +1,6 @@
 ---
 author: Votre nom
-title: Chapitre 2
+title: Chapitre 1
 ---
 
 ## I. Paragraphe 1 : 
