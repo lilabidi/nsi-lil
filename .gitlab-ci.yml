@@ -7,7 +7,7 @@ stages:
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  EDIT_VARIABLE: "$CI_PROJECT_ROOT_NAMESPACE/-/tree/main/docs"
+  EDIT_VARIABLE: "$CI_PROJECT_URL/-/tree/main/docs"
 cache:
   paths:
     - .cache/pip
