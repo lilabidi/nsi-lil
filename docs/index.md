@@ -1,13 +1,16 @@
 # Modèle de site pour l'enseignement
 
-😊 Ce site évoluera pendant l'année ...
+😊 Ce site est un modèle de site avec python. Cela signifie que vous pouvez le forker[^fork] ou le cloner afin de construire votre propre site.
 
-Vous pouvez faire un "fork"[^fork] de ce site pour réaliser le vôtre avec des exercices Python intéractifs.
+Vous trouverez un lien vers le [dépôt](https://forge.aeif.fr/modeles-projets/mkdocs-pyodide-review){ .md-button target="_blank" rel="noopener" } et un lien vers un [tutoriel](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/){ .md-button target="_blank" rel="noopener" }.
 
-La version de pyodide utilisée est pour le moment la 0.9.1
+Ce modèle se veut épuré mais présente les principales fonctionnalités pour vous permettre une appropriation rapide.
+On trouvera
+- chapitre 1 avec un seul fichier, le plus simple possible ;
+- chapitre 2 contenant plusieurs fichiers, correspondant à des parties du chapitre ;
+- un exemple de projet « morse » ;
+- des crédits.
 
-Le dépôt est ici pour récupérer des syntaxes : [Dépôt](https://forge.aeif.fr/modeles-projets/mkdocs-pyodide-review){ .md-button target="_blank" rel="noopener" }
-
-Pour des explications de syntaxes, des tutos et des ressources c'est ici : [Outils et tutos](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/){ .md-button target="_blank" rel="noopener" }
+Vous pouvez désormais modifier le contenu des fichiers pour créer votre propre site web.
 
 [^fork]: Voir dans la documentation
