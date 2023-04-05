@@ -3,7 +3,7 @@ author: Votre nom
 title: Chapitre 1
 ---
 
-## I. Paragraphe 1 : 
+## I. Paragraphe 1 :
 
 texte 1
 
@@ -15,7 +15,7 @@ Texte 1.1
 
 Texte 1.2
 
-## II. Paragraphe 2 : 
+## II. Paragraphe 2 :
 
 texte 1
 

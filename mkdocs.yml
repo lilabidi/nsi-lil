@@ -1,24 +1,24 @@
+# À modifier avec le nom et la description du site
 site_name: "Modèle de site avec Python"
 site_description: Un modèle avec mkdocs
 
-site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
-site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
-repo_url: !ENV [CI_PROJECT_URL]
-edit_uri: !ENV [EDIT_VARIABLE]
-
+# À modifier, avec votre nom et la licence choisie
 copyright: |
     Association <a href="https://aeif.fr">AEIF</a>
     <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br/>
     Hébergé sur la forge gérée par l'<a href="https://aeif.fr">AEIF</a>
 
+# À modifier, avec votre mail
+extra:
+    social:
+        - icon: fontawesome/regular/envelope
+          link: mailto:votre.mail@ac-academie.fr
+          name: Écrire à l'auteur
+        - icon: fontawesome/brands/gitlab
+          link: !ENV [CI_PROJECT_ROOT_NAMESPACE]
+          name: AEIF
 
-docs_dir: docs
-
-nav:
-  - "🏡 Accueil": index.md
-  - ... | regex=^(?:(?!_REM.md).)*$
-
-
+# Éventuellement à modifier avec votre thème de couleurs
 theme:
     favicon: assets/favicon.ico
     icon:
@@ -30,15 +30,15 @@ theme:
     palette:                        # Palettes de couleurs jour/nuit
       - media: "(prefers-color-scheme: light)"
         scheme: default
-        primary: indigo
-        accent: indigo
+        primary: white
+        accent: pink
         toggle:
             icon: material/weather-sunny
             name: Passer au mode nuit
       - media: "(prefers-color-scheme: dark)"
         scheme: slate
-        primary: blue
-        accent: blue
+        primary: black
+        accent: green
         toggle:
             icon: material/weather-night
             name: Passer au mode jour
@@ -49,11 +49,22 @@ theme:
         - toc.integrate
         - header.autohide
 
+# Fin de modifications à effectuer, ne pas toucher les lignes suivantes sauf si vous comprenez ce que vous faites.
+
+site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
+site_author: !ENV [CI_COMMIT_AUTHOR, "Nom d'auteur"]
+repo_url: !ENV [CI_PROJECT_URL]
+edit_uri: !ENV [EDIT_VARIABLE]
+
+docs_dir: docs
+
+nav:
+  - "🏡 Accueil": index.md
+  - ... | regex=^(?:(?!_REM.md).)*$
 
 markdown_extensions:
     - meta
     - abbr
-
     - def_list                      # Les listes de définition.
     - attr_list                     # Un peu de CSS et des attributs HTML.
     - footnotes                     # Notes[^1] de bas de page.  [^1]: ma note.
@@ -77,40 +88,21 @@ markdown_extensions:
         clickable_checkbox: true    #   et cliquables.
     - pymdownx.tabbed:              # Volets glissants.  === "Mon volet"
         alternate_style: true 
-
     - pymdownx.keys:                # Touches du clavier.  ++ctrl+d++
         separator: "\uff0b"
     - pymdownx.emoji:               # Émojis  :boom:
         emoji_index:     !!python/name:materialx.emoji.twemoji
         emoji_generator: !!python/name:materialx.emoji.to_svg
-
-
     - pymdownx.superfences:
         custom_fences:
           - name: mermaid
             class: mermaid
             format: !!python/name:pymdownx.superfences.fence_code_format
-
-
-
     - pymdownx.arithmatex:
         generic: true
     - toc:
         permalink: ⚓︎
         toc_depth: 2
-
-extra:
-    social:
-        - icon: fontawesome/regular/envelope
-          link: mailto:votre.mail@ac-academie.fr
-          name: Écrire à l'auteur
-
-        - icon: fontawesome/brands/gitlab
-          link: !ENV [CI_PROJECT_ROOT_NAMESPACE]
-          name: AEIF
-
-
-
 
 plugins:
   - search

@@ -19,7 +19,12 @@ build:
     - source .venv/bin/activate
     - pip install -r requirements.txt
   script:
-    - mkdocs build
+    - |
+      if [ $CI_COMMIT_REF_NAME = "main" ] ; then
+        mkdocs build
+      else
+        mkdocs build --no-directory-urls
+      fi
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_REF_NAME == 'main'
@@ -29,10 +34,7 @@ build:
 
 pages:review:
   stage: review
-  before_script:
-    - apk add findutils
   script:
-    - find site/ -type f -regextype egrep -iregex ".*\.(html)" -exec sed -i -r -e 's@<a href="../(.*)/"@<a href="../\1/index.html"@' -e 's@<a href="./"@<a href="./index.html"@' -e 's@<a href="../.."@<a href="../../index.html"@' -e 's/(href="[^http].*\/)"/\1index.html"/' "{}" +;
     - mv site public
   needs:
     - job: build
