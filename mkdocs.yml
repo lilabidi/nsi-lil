@@ -1,5 +1,6 @@
 # À modifier avec le nom et la description du site
 site_name: "Modèle de site avec Python"
+# site_url:  à compléter
 site_description: Un modèle avec mkdocs
 
 # À modifier, avec votre nom et la licence choisie
