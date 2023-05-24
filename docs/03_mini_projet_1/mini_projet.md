@@ -41,5 +41,5 @@ Ecrire un script qui permet de déchiffrer un message envoyé en morse.
     >>> message = 
     '-°°°*°-°*°-*°°°-*---*/*°---*°*°°-*-°*°*/*°--°*°-*-°°*°-*°--*°-*-°*/*°-°°*°-*/*-°*°°°*°°*/*°*°°°*-*/*°-*°°°-*°*-°-°*/*-*---*°°*'
     >>> decode_mots(message, morse)
-    ' B R A V O  J E U N E  P A D A W A N  L A  N S I  E S T  A V E C  T O I'
+    ' BRAVO JEUNE  PADAWAN LA NSI EST AVEC TOI'
     ```
