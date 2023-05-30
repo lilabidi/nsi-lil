@@ -21,7 +21,7 @@ Vous pourrez y écrire par exemple l'adresse de rendu de votre propre site.
 
 L'adresse originale du rendu de ce site modèle avant clonage est : 
 
-[Modèle de projet avec Python](https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/){:target="_blank" }
+[Modèle de projet avec Python](https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/)
 
 
 
