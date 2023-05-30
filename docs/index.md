@@ -1,4 +1,4 @@
-# Modèle de site pour l'enseignement
+# Modèle de site pour l'enseignement 
 
 😊 Ce site est un modèle de site avec Python. Cela signifie que vous pouvez le forker[^1] ou le cloner afin de construire votre propre site.
 
@@ -13,6 +13,12 @@ On trouvera :
 * des crédits.
 
 Vous pouvez désormais modifier le contenu des fichiers pour créer votre propre site web.
+
+## Accueil à personnaliser une fois votre propre site réalisé
+
+😂 Ne pas oublier de personnaliser cette page qui sera l'accueil de votre propre site.
+
+Voir le tutoriel [Personnaliser l'accueil](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/1_demarrage/1_demarrage/#iv-personnaliser-la-page-daccueil-du-site-que-vous-avez-clone)
 
 [^1]: Voir le tutoriel : [tutoriel pour faire un fork](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/8_tuto_fork/1_fork_projet/)
 
