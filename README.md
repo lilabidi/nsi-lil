@@ -15,4 +15,13 @@ La documentation est sur https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review
 
 Pour signaler un souci sur le **modèle**, écrire à [gitlab+modeles-projets-modeles-projets-154-issue-@aeif.fr](mailto:gitlab+modeles-projets-modeles-projets-154-issue-@aeif.fr) ou ouvrir un ticket sur https://forge.aeif.fr/modeles-projets/mkdocs-pyodide-review/-/issues
 
+- [ ] Une fois toutes les modifications précédentes effectuées, éditer ce fichier README.md pour le personnaliser.
+
+Vous pourrez y écrire par exemple l'adresse de rendu de votre propre site.
+
+L'adresse originale du rendu de ce site modèle avant clonage est : 
+
+[Modèle de projet avec Python](https://modeles-projets.forge.aeif.fr/mkdocs-pyodide-review/){:target="_blank" }
+
+
 
