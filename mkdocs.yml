@@ -30,8 +30,8 @@ theme:
     palette:                        # Palettes de couleurs jour/nuit
       - media: "(prefers-color-scheme: light)"
         scheme: default
-        primary: white
-        accent: pink
+        primary: indigo
+        accent: indigo
         toggle:
             icon: material/weather-sunny
             name: Passer au mode nuit
