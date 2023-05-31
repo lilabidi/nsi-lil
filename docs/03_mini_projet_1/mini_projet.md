@@ -8,7 +8,9 @@ tags:
 
 ## Le code morse : 
 
-![morse](images/morse.png){ width=40%; : .center }
+![morse](images/code_Morse.png){ width=40%; : .center }
+
+Crédits : F1jmm, [CC BY-SA 4.0](https:https://creativecommons.org/licenses/by-sa/4.0){:target="_blank" } , Wikimedia Commons
 
 
 !!! info "Utilisation d'un dictionnaire"
@@ -39,7 +41,7 @@ Ecrire un script qui permet de déchiffrer un message envoyé en morse.
 
     ```pycon
     >>> message = 
-    '-°°°*°-°*°-*°°°-*---*/*°---*°*°°-*-°*°*/*°--°*°-*-°°*°-*°--*°-*-°*/*°-°°*°-*/*-°*°°°*°°*/*°*°°°*-*/*°-*°°°-*°*-°-°*/*-*---*°°*'
+    '-°°°*°-°*°-*°°°-*---*/°---*°*°°-*-°*°*/°--°*°-*-°°*°-*°--*°-*-°*/°-°°*°-*/-°*°°°*°°*/°*°°°*-*/°-*°°°-*°*-°-°*/-*---*°°*'
     >>> decode_mots(message, morse)
-    ' BRAVO JEUNE  PADAWAN LA NSI EST AVEC TOI'
+    'BRAVO JEUNE  PADAWAN LA NSI EST AVEC TOI'
     ```
