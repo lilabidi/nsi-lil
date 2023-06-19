@@ -18,9 +18,9 @@ Vous pouvez désormais modifier le contenu des fichiers pour créer votre propre
 
 😂 Ne pas oublier de personnaliser cette page qui sera l'accueil de votre propre site.
 
-Voir le tutoriel [Personnaliser l'accueil](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/1_demarrage/1_demarrage/#iv-personnaliser-la-page-daccueil-du-site-que-vous-avez-clone){:target="_blank" }
+Voir le tutoriel [Personnaliser l'accueil](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/01_demarrage/1_demarrage/#iv-personnaliser-la-page-daccueil-du-site-que-vous-avez-clone){:target="_blank" }
 
-[^1]: Voir le tutoriel : [tutoriel pour faire un fork](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/8_tuto_fork/1_fork_projet/){:target="_blank" }
+[^1]: Voir le tutoriel : [tutoriel pour faire un fork](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/08_tuto_fork/1_fork_projet/){:target="_blank" }
 
 
 
