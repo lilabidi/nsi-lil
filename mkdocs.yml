@@ -1,10 +1,11 @@
 # À modifier avec le nom et la description du site
-site_name: "Modèle de site avec Python"
-site_description: Un modèle avec mkdocs
+site_name: "SNT au LIL"
+site_description: Cours & Exercices
 
 # À modifier, avec votre nom et la licence choisie
 copyright: |
-    Association <a href="https://aeif.fr">AEIF</a>
+    
+    Computer Science Teacher <a href="https://www.lyceeinternational.london/">LIL</a>
     <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br/>
     Hébergé sur la forge gérée par l'<a href="https://aeif.fr">AEIF</a>
 
