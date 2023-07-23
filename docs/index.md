@@ -1,4 +1,4 @@
-# Modèle de site pour l'enseignement 
+# Site de SNT au LIL
 
 😊 Ce site est un modèle de site avec Python. Cela signifie que vous pouvez le forker[^1] ou le cloner afin de construire votre propre site.
 
@@ -14,7 +14,7 @@ On trouvera :
 
 Vous pouvez désormais modifier le contenu des fichiers pour créer votre propre site web.
 
-## Accueil à personnaliser une fois votre propre site réalisé
+## Sciences Numériques & Technologie Support
 
 😂 Ne pas oublier de personnaliser cette page qui sera l'accueil de votre propre site.
 
