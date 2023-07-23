@@ -1,3 +1,5 @@
+# Personalisation de la Page
+
 Ce fichier est à éditer lors de la première utilisation du projet.
 
 - [ ] Éditer le fichier [mkdocs.yml](mkdocs.yml)
