@@ -32,6 +32,8 @@ Si $x_1, x_2, \ldots, x_p$ désignent les $p$ modalités du caractère d'une sé
 \vspace{-0.5em}
 $$\overline{x}=f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p$$
 \end{propriete}
+$$
+$$
 \begin{preuve}
 Posons $N=n_1~+~n_2~+~n_3~+~\ldots~+~n_p$
 
