@@ -23,7 +23,7 @@ extra:
 theme:
     favicon: assets/favicon.ico
     icon:
-      logo: material/application-variable
+      logo: material/stairs-up
     custom_dir: my_theme_customizations/
     name: material
     font: false                     # RGPD ; pas de fonte Google
