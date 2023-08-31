@@ -28,42 +28,21 @@ Texte 2.1
 Texte 2.2
 
 
-\exo{}
+::: propriete
+Si $x_1, x_2, \ldots, x_p$ désignent les $p$ modalités du caractère
+d'une série statistique, et\
+$f_1, f_2, \ldots, f_p$ désignent les fréquences correspondantes alors,
+$$\overline{x}=f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p$$
+:::
 
+::: preuve
+Posons $N=n_1~+~n_2~+~n_3~+~\ldots~+~n_p$
 
-\marginpar{\footnotesize 2N20-1}\begin{enumerate}
-	\item Compléter le tableau suivant et faire la liste de tous les diviseurs de 273.$\medskip$\\
-$\begin{array}{|c|c|c|}
-\hline
-\text{Facteur n°1} & \text{Facteur n°2} & \text{Produit donnant } 273 \\
-\hline
-1 & 273& 273 \\
-\hline
-\ldots & \ldots& 273 \\
-\hline
-7 & 39& \ldots \\
-\hline
-13 & \ldots& 273 \\
-\hline
-\end{array}
-$\\
-	\item Compléter le tableau suivant et faire la liste de tous les diviseurs de 162.$\medskip$\\
-$\begin{array}{|c|c|c|}
-\hline
-\text{Facteur n°1} & \text{Facteur n°2} & \text{Produit donnant } 162 \\
-\hline
-\ldots & 162& \ldots \\
-\hline
-2 & 81& 162 \\
-\hline
-3 & \ldots& \ldots \\
-\hline
-6 & \ldots& 162 \\
-\hline
-9 & 18& 162 \\
-\hline
-\end{array}
-$\\
-	\item Écrire la liste de tous les diviseurs de 812.
-\end{enumerate}
-\end{document}
+$\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
+
+ \overline{x}&=&\dfrac{\TopStrut n_1~\times~x_1~+~n_2~\times~x_2~+~n_3~\times~x_3~+~\cdots~+~n_p~\times~x_p}{\BotStrut n_1~+~n_2~+~n_3~+~\cdots~+~n_p}\\
+ \overline{x}&=&\dfrac{n_1~\times~x_1}{N}~+~\dfrac{n_2~\times~x_2}{N}~+~\dfrac{n_3~\times~x_3}{N}~+~\cdots~+~\dfrac{n_p~\times~x_p}{N}
+\\
+ \overline{x}&=&f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p
+  \end{array}\renewcommand{\arraystretch}{1}$
+:::
