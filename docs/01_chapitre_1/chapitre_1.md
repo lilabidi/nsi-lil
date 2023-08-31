@@ -28,13 +28,10 @@ Texte 2.1
 Texte 2.2
 
 
-$$
-\begin{propriete}
 Si $x_1, x_2, \ldots, x_p$ désignent les $p$ modalités du caractère d'une série statistique, et\\ $f_1, f_2, \ldots, f_p$ désignent les fréquences correspondantes alors,
 \vspace{-0.5em}
-\overline{x}=f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p$$
-\end{propriete}
-$$
+\overline{x}=f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p$
+
 
 $$
 \begin{preuve}
