@@ -1,5 +1,8 @@
 # Site de SNT au LIL
 
+
+[https://elabidi.forge.aeif.fr/snt-au-lil/](https://elabidi.forge.aeif.fr/snt-au-lil/)
+
 😊 Ce site est un modèle de site avec Python. Cela signifie que vous pouvez le forker[^1] ou le cloner afin de construire votre propre site.
 
 Vous trouverez un lien vers le [dépôt](https://forge.aeif.fr/modeles-projets/mkdocs-pyodide-review){ .md-button target="_blank" rel="noopener" } et un lien vers un [tutoriel](https://tutoriels.forge.aeif.fr/mkdocs-pyodide-review/){ .md-button target="_blank" rel="noopener" }.
