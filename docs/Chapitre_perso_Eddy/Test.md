@@ -1,6 +1,6 @@
 ---
 author: Eddy
-title: Mon chapitre perso
+title: Mon chapitre perso Eddy
 ---
 
 # mon chapitre test
