@@ -1,6 +1,6 @@
 ---
-author: Mireille Coilhac
-title: Crédits
+author: Eddy Labidi
+title: Crédits free
 ---
 
 Le site est hébergé par la forge de [l'*Association des Enseignants d'Informatique de France*](https://aeif.fr/index.php/accueil/).
