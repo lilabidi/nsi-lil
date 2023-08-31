@@ -28,15 +28,14 @@ Texte 2.1
 Texte 2.2
 
 
-::: propriete
-Si $x_1, x_2, \ldots, x_p$ désignent les $p$ modalités du caractère
-d'une série statistique, et\
-$f_1, f_2, \ldots, f_p$ désignent les fréquences correspondantes alors,
+Si *x*<sub>1</sub>, *x*<sub>2</sub>, …, *x*<sub>*p*</sub> désignent les
+*p* modalités du caractère d’une série statistique, et  
+*f*<sub>1</sub>, *f*<sub>2</sub>, …, *f*<sub>*p*</sub> désignent les
+fréquences correspondantes alors,
 $$\overline{x}=f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p$$
-:::
 
-::: preuve
-Posons $N=n_1~+~n_2~+~n_3~+~\ldots~+~n_p$
+Posons
+*N* = *n*<sub>1</sub> + *n*<sub>2</sub> + *n*<sub>3</sub> + … + *n*<sub>*p*</sub>
 
 $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 
@@ -45,4 +44,3 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 \\
  \overline{x}&=&f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p
   \end{array}\renewcommand{\arraystretch}{1}$
-:::
