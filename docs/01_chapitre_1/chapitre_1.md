@@ -63,6 +63,8 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 
 <img src="images\qrcode_manuel.sesamath.net.png"  width="10%" height="10%">
 
+https://manuel.sesamath.net/imgs_produites/vign/ms2_2023/114440-1.gif
+
 
 
 
