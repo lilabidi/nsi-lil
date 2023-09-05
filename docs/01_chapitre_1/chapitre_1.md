@@ -44,3 +44,7 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 \\
  \overline{x}&=&f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p
   \end{array}\renewcommand{\arraystretch}{1}$
+
+  ![Getting Started](./2/to/img.jpg)
+
+  
