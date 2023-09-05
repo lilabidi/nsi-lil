@@ -54,6 +54,14 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 
 ![Getting url](https://static.vecteezy.com/system/resources/previews/009/273/280/non_2x/concept-of-loneliness-and-disappointment-in-love-sad-man-sitting-element-of-the-picture-is-decorated-by-nasa-free-photo.jpg)
   
-[Image PDF](\snt-au-lil\docs\01_chapitre_1\images\Devis-Livres-Scolaire-Maths-2nde.pdf)
+[Image PDF](images\Devis-Livres-Scolaire-Maths-2nde.pdf)
 
 ![Activite](https://manuel.sesamath.net/imgs_produites/vign/ms2_2023/114452-1.gif)
+
+![Activite-Correction](https://manuel.sesamath.net/imgs_produites/vign/ms2_2023/114452-1.gif)
+
+![Activite-Correction](images\qrcode_manuel.sesamath.net.png)
+
+
+
+
