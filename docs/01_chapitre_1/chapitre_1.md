@@ -49,6 +49,10 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 
 
 ![Getting jpg](\snt-au-lil\docs\01_chapitre_1\images\55a86524e889e0ab5cae6565eacfc6ae.jpg)
+
+
+
+![Getting url](https://static.vecteezy.com/system/resources/previews/009/273/280/non_2x/concept-of-loneliness-and-disappointment-in-love-sad-man-sitting-element-of-the-picture-is-decorated-by-nasa-free-photo.jpg)
   
 ![morse](images/code_Morse.png){ width=40%; : .center }
 
