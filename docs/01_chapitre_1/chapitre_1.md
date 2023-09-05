@@ -45,8 +45,11 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
  \overline{x}&=&f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p
   \end{array}\renewcommand{\arraystretch}{1}$
 
-  ![Getting Started](\snt-au-lil\docs\01_chapitre_1\images\1241px-Pix_logo.svg.png)
+![Getting pix](\snt-au-lil\docs\01_chapitre_1\images\1241px-Pix_logo.svg.png)
+
   
-  ![morse](images/code_Morse.png){ width=40%; : .center }
+![Getting jpg](\snt-au-lil\docs\01_chapitre_1\images\55a86524e889e0ab5cae6565eacfc6ae.jpg)
+  
+![morse](images/code_Morse.png){ width=40%; : .center }
 
   
