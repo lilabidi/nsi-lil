@@ -45,23 +45,15 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
  \overline{x}&=&f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p
   \end{array}\renewcommand{\arraystretch}{1}$
 
-![Getting pix](images\1241px-Pix_logo.svg.png){ width=40%; : .center }
+![Getting pix](images\1241px-Pix_logo.svg.png)
 
 
-![Getting jpg](\snt-au-lil\docs\01_chapitre_1\images\55a86524e889e0ab5cae6565eacfc6ae.jpg)
+![Getting jpg](images\55a86524e889e0ab5cae6565eacfc6ae.jpg)
 
 
 
 ![Getting url](https://static.vecteezy.com/system/resources/previews/009/273/280/non_2x/concept-of-loneliness-and-disappointment-in-love-sad-man-sitting-element-of-the-picture-is-decorated-by-nasa-free-photo.jpg)
   
-![Image PDF](\snt-au-lil\docs\01_chapitre_1\images\Devis-Livres-Scolaire-Maths-2nde.pdf)
+[Image PDF](\snt-au-lil\docs\01_chapitre_1\images\Devis-Livres-Scolaire-Maths-2nde.pdf)
 
-<iframe width="100%" height="800" src="\snt-au-lil\docs\01_chapitre_1\images\Devis-Livres-Scolaire-Maths-2nde.pdf">
-
-<object data="http://yoursite.com/the.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="images\Devis-Livres-Scolaire-Maths-2nde.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="images\Devis-Livres-Scolaire-Maths-2nde.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
-
-  
+![Activite](https://manuel.sesamath.net/imgs_produites/vign/ms2_2023/114452-1.gif)
