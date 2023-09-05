@@ -45,7 +45,7 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
  \overline{x}&=&f_1~\times~x_1~+~f_2~\times~x_2~+~f_3~\times~x_3~+~\cdots~+~f_p~\times~x_p
   \end{array}\renewcommand{\arraystretch}{1}$
 
-![Getting pix](images\1241px-Pix_logo.svg.png)
+![Getting png](images\1241px-Pix_logo.svg.png)
 
 
 ![Getting jpg](images\55a86524e889e0ab5cae6565eacfc6ae.jpg)
@@ -58,9 +58,10 @@ $\renewcommand{\arraystretch}{1.5}\begin{array}{rcl}
 
 ![Activite](https://manuel.sesamath.net/imgs_produites/vign/ms2_2023/114452-1.gif)
 
-![Activite-Correction](https://manuel.sesamath.net/imgs_produites/vign/ms2_2023/114452-1.gif)
 
 ![Activite-Correction](images\qrcode_manuel.sesamath.net.png)
+
+<img src="images\qrcode_manuel.sesamath.net.png"  width="10%" height="10%">
 
 
 
